@@ -2157,20 +2157,6 @@
     }
 
 
-    @keyframes ottoSpin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    #ottoPrintModal {
-      z-index: 9999 !important;
-    }
-
-    #ottoPrintModal .sheet {
-      width: min(360px, 92vw) !important;
-      border-radius: 22px !important;
-    }
 
 
 
@@ -2178,6 +2164,40 @@
 
 
 
+    /* =========================================================
+       CENTRAL DE PDF • 4 MODELOS + PRÉVIA
+    ========================================================= */
+    .pdf-reserva-modal{z-index:9999!important;padding:14px!important;align-items:center!important}
+    .pdf-reserva-sheet{width:min(1380px,100%)!important;height:min(92vh,900px)!important;max-height:92vh!important;overflow:hidden!important;display:flex;flex-direction:column;border-radius:22px!important}
+    .pdf-reserva-head{flex:0 0 auto;padding:14px 16px!important}
+    .pdf-reserva-head p{margin:4px 0 0;color:var(--muted);font-size:.78rem;font-weight:700}
+    .pdf-reserva-body{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:330px minmax(0,1fr);background:#eef7ff}
+    .pdf-models-panel{padding:14px;overflow:auto;background:#fff;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:9px}
+    .pdf-models-title{color:var(--blue-900);font-size:.76rem;font-weight:950;text-transform:uppercase;letter-spacing:.05em;margin:2px 2px 3px}
+    .pdf-model-card{width:100%;border:1px solid var(--line);background:#fff;border-radius:15px;padding:11px;display:grid;grid-template-columns:38px minmax(0,1fr) 22px;gap:9px;align-items:center;text-align:left;cursor:pointer;color:var(--text);transition:.15s ease}
+    .pdf-model-card:hover{transform:translateY(-1px);border-color:var(--blue-400);box-shadow:var(--shadow-soft)}
+    .pdf-model-card.active{border-color:var(--blue-500);background:var(--blue-50);box-shadow:0 0 0 3px rgba(14,165,233,.10)}
+    .pdf-model-icon{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:#eef8ff;font-size:18px}
+    .pdf-model-card b{display:block;color:var(--blue-900);font-size:.82rem;font-weight:950}
+    .pdf-model-card small{display:block;color:var(--muted);font-size:.67rem;font-weight:700;line-height:1.3;margin-top:2px}
+    .pdf-model-card i{width:20px;height:20px;border-radius:999px;display:grid;place-items:center;background:var(--blue-500);color:#fff;font-size:11px;font-style:normal;opacity:0}
+    .pdf-model-card.active i{opacity:1}
+    .pdf-download-box{margin-top:auto;border:1px solid var(--line);background:linear-gradient(180deg,var(--blue-50),#fff);border-radius:16px;padding:12px}
+    .pdf-download-box>b{display:block;color:var(--blue-900);font-size:.82rem}
+    .pdf-download-box>small{display:block;color:var(--muted);font-size:.68rem;line-height:1.4;font-weight:700;margin:4px 0 10px}
+    .pdf-preview-panel{min-width:0;min-height:0;padding:14px;display:flex;flex-direction:column}
+    .pdf-preview-toolbar{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+    .pdf-preview-toolbar small{display:block;color:var(--muted);font-size:.62rem;font-weight:900;letter-spacing:.05em}
+    .pdf-preview-toolbar b{display:block;color:var(--blue-900);font-size:.92rem;margin-top:2px}
+    .pdf-preview-wrap{position:relative;flex:1 1 auto;min-height:0;border:1px solid var(--line-strong);border-radius:16px;overflow:hidden;background:#64748b;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
+    #pdfPreviewFrame{width:100%;height:100%;border:0;background:#64748b;display:block}
+    .pdf-preview-loading{position:absolute;inset:0;z-index:2;display:none;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:rgba(238,247,255,.92);color:var(--blue-900)}
+    .pdf-preview-loading.show{display:flex}
+    .pdf-preview-loading span{width:34px;height:34px;border:4px solid #bae6fd;border-top-color:#0284c7;border-radius:999px;animation:pdfSpin .8s linear infinite}
+    .pdf-preview-loading b{font-size:.78rem}
+    @keyframes pdfSpin{to{transform:rotate(360deg)}}
+    @media(max-width:820px){.pdf-reserva-modal{padding:0!important;align-items:flex-end!important}.pdf-reserva-sheet{height:96vh!important;max-height:96vh!important;border-radius:20px 20px 0 0!important}.pdf-reserva-body{grid-template-columns:1fr;grid-template-rows:auto minmax(320px,1fr)}.pdf-models-panel{border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;max-height:290px}.pdf-models-title,.pdf-download-box{grid-column:1/-1}.pdf-model-card{grid-template-columns:32px minmax(0,1fr) 18px;padding:8px}.pdf-model-icon{width:32px;height:32px}.pdf-model-card small{display:none}.pdf-download-box{margin-top:0}.pdf-preview-panel{padding:9px}.pdf-reserva-head p{display:none}}
+    @media(max-width:430px){.pdf-models-panel{gap:6px;padding:9px}.pdf-model-card b{font-size:.68rem}.pdf-download-box>small{display:none}.pdf-download-box{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px}.pdf-download-box .btn{width:auto}.pdf-preview-toolbar{margin-bottom:5px}}
 
     /* =========================================================
    AUTENTICAÇÃO PROFISSIONAL • SUPABASE AUTH
@@ -3955,8 +3975,8 @@ function renderResItem(r){
           <button
   type="button"
   class="btn btn-soft btn-xs btn-imprimir"
-  data-id="${id}">
-  🖨️ Imprimir
+  data-id="${id}" title="Visualizar modelos e baixar PDF">
+  📄 PDF
 </button> 
           <select class="status-select" data-id="${id}">
             <option value="Pendente" ${status === "Pendente" ? "selected" : ""}>Pendente</option>
@@ -5189,677 +5209,329 @@ if($("#btnScrollForm")){
   });
 }
 /* =========================================================
-   OTTO IMPRESSÃO VIA url_api
+   CENTRAL DE PDF DA RESERVA • 4 MODELOS + PRÉVIA
 ========================================================= */
 
-const TOKEN_IMPRESSAO_OTTO =
-  "123456789MERCATTOIMPRESSAO";
+const pdfReservaState = {
+  reserva:null,
+  modelo:"elegante",
+  blob:null,
+  blobUrl:"",
+  nomeArquivo:"reserva.pdf"
+};
 
-const TIPO_URL_IMPRESSAO_OTTO =
-  "impressao_rh_documentos";
+const PDF_MODELOS = {
+  elegante:{nome:"Elegante horizontal",descricao:"A4 paisagem com nome e mensagem de boas-vindas.",icone:"✨"},
+  ficha:{nome:"Ficha completa",descricao:"A4 vertical com todos os dados da reserva organizados.",icone:"📋"},
+  compacto:{nome:"Cartões compactos",descricao:"Dois comprovantes destacáveis na mesma folha A4.",icone:"✂️"},
+  mesa:{nome:"Display de mesa",descricao:"Modelo dobrável com identificação nos dois sentidos.",icone:"🪧"}
+};
 
-const TIPO_URL_IMPRESSAO_FALLBACK_OTTO =
-  "impressao";
-
-function abrirPopupOttoImprimindo(){
-
-  const modal = document.getElementById("ottoPrintModal");
-
-  if(modal){
-    modal.classList.add("show");
-    modal.setAttribute("aria-hidden", "false");
+function limparPreviewPDFReserva(){
+  if(pdfReservaState.blobUrl){
+    URL.revokeObjectURL(pdfReservaState.blobUrl);
+    pdfReservaState.blobUrl = "";
   }
-
+  pdfReservaState.blob = null;
 }
 
-function fecharPopupOttoImprimindo(){
-
-  const modal = document.getElementById("ottoPrintModal");
-
-  if(modal){
-    modal.classList.remove("show");
-    modal.setAttribute("aria-hidden", "true");
-  }
-
+function nomeSeguroArquivo(texto){
+  return String(texto || "reserva")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-zA-Z0-9_-]+/g,"_")
+    .replace(/^_+|_+$/g,"")
+    .slice(0,80) || "reserva";
 }
 
-function normalizarBaseUrlOtto(url){
-
-  let limpa = String(url || "").trim();
-
-  limpa = limpa.replace(/\/+$/, "");
-  limpa = limpa.replace(/\/imprimir-base64$/, "");
-  limpa = limpa.replace(/\/imprimir$/, "");
-
-  return limpa;
-
+function dadosPDFReserva(r){
+  return {
+    nome:r?.nome || "Reservante",
+    pessoas:r?.pessoas || "—",
+    local:r?.mesa || "Não definido",
+    data:formatDateBR(r?.datahora),
+    hora:formatTimeBR(r?.datahora),
+    telefone:r?.telefone || "Não informado",
+    status:normalizeStatusLabel(r?.status || "Pendente"),
+    observacao:r?.observacao || r?.observacoes || "Nenhuma observação informada.",
+    valor:Number(r?.valor || r?.valor_total || 0),
+    pagamento:r?.forma_pagamento || r?.pagamento || "Não informado",
+    responsavel:r?.responsavel || r?.atendente || "Não informado"
+  };
 }
 
-function montarUrlImpressaoOtto(url){
-
-  const base = normalizarBaseUrlOtto(url);
-
-  if(!base){
-    return "";
-  }
-
-  return `${base}/imprimir`;
-
+function cabecalhoPDF(doc,titulo,subtitulo,pageW){
+  doc.setFillColor(3,105,161);
+  doc.rect(0,0,pageW,27,"F");
+  doc.setTextColor(255,255,255);
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(16);
+  doc.text(titulo,14,12);
+  doc.setFont("helvetica","normal");
+  doc.setFontSize(9);
+  doc.text(subtitulo,14,19);
 }
 
-async function buscarUrlImpressaoOtto(){
-  const result = await backendRequest("impressao.buscarUrl", {
-    tipoPrincipal:TIPO_URL_IMPRESSAO_OTTO,
-    tipoFallback:TIPO_URL_IMPRESSAO_FALLBACK_OTTO
+function rodapePDF(doc,pageW,pageH){
+  doc.setDrawColor(203,225,238);
+  doc.line(14,pageH-15,pageW-14,pageH-15);
+  doc.setTextColor(100,116,139);
+  doc.setFont("helvetica","normal");
+  doc.setFontSize(7.5);
+  doc.text("Documento gerado pelo Painel de Reservas • Mercatto Delícia",pageW/2,pageH-9,{align:"center"});
+}
+
+function campoPDF(doc,x,y,w,label,value,opts={}){
+  const h = opts.h || 22;
+  doc.setFillColor(...(opts.fill || [248,252,255]));
+  doc.setDrawColor(...(opts.border || [207,232,247]));
+  doc.roundedRect(x,y,w,h,4,4,"FD");
+  doc.setTextColor(95,127,149);
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(7.5);
+  doc.text(String(label).toUpperCase(),x+5,y+7);
+  doc.setTextColor(8,47,73);
+  doc.setFont("helvetica",opts.bold === false ? "normal" : "bold");
+  doc.setFontSize(opts.fontSize || 10.5);
+  const linhas = doc.splitTextToSize(String(value ?? "—"),w-10);
+  doc.text(linhas,x+5,y+14,{maxWidth:w-10});
+  return h;
+}
+
+function gerarModeloFicha(r){
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:"portrait",unit:"mm",format:"a4"});
+  const d=dadosPDFReserva(r), W=210, H=297;
+  doc.setFillColor(245,251,255); doc.rect(0,0,W,H,"F");
+  cabecalhoPDF(doc,"COMPROVANTE DE RESERVA",`${d.data} às ${d.hora} • ${d.status}`,W);
+
+  doc.setFillColor(255,255,255); doc.setDrawColor(186,230,253);
+  doc.roundedRect(12,37,186,52,6,6,"FD");
+  doc.setTextColor(3,105,161); doc.setFont("helvetica","bold"); doc.setFontSize(8);
+  doc.text("RESERVA EM NOME DE",20,50);
+  doc.setTextColor(8,47,73); doc.setFont("times","bold"); doc.setFontSize(d.nome.length>32?21:27);
+  doc.text(doc.splitTextToSize(d.nome,170),20,64);
+  doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(71,85,105);
+  doc.text(`${d.pessoas} pessoa(s) • ${d.local}`,20,82);
+
+  campoPDF(doc,12,99,90,"Data e horário",`${d.data} às ${d.hora}`);
+  campoPDF(doc,108,99,90,"Status",d.status);
+  campoPDF(doc,12,127,90,"Telefone",d.telefone);
+  campoPDF(doc,108,127,90,"Local / mesa",d.local);
+  campoPDF(doc,12,155,90,"Quantidade",`${d.pessoas} pessoa(s)`);
+  campoPDF(doc,108,155,90,"Pagamento",d.pagamento);
+  campoPDF(doc,12,183,186,"Observações",d.observacao,{h:52,bold:false,fontSize:9.5});
+
+  doc.setFillColor(239,248,255); doc.setDrawColor(186,230,253);
+  doc.roundedRect(12,244,186,28,5,5,"FD");
+  doc.setTextColor(3,105,161); doc.setFont("helvetica","bold"); doc.setFontSize(9);
+  doc.text("MERCATTO DELÍCIA",20,256);
+  doc.setTextColor(71,85,105); doc.setFont("helvetica","normal"); doc.setFontSize(8.5);
+  doc.text("Apresente este documento quando solicitado.",20,264);
+  rodapePDF(doc,W,H);
+  return doc;
+}
+
+function desenharComprovanteCompacto(doc,r,x,y,w,h,indice){
+  const d=dadosPDFReserva(r);
+  doc.setFillColor(255,255,255); doc.setDrawColor(186,230,253);
+  doc.roundedRect(x,y,w,h,6,6,"FD");
+  doc.setFillColor(3,105,161); doc.roundedRect(x,y,w,22,6,6,"F"); doc.rect(x,y+16,w,6,"F");
+  doc.setTextColor(255,255,255); doc.setFont("helvetica","bold"); doc.setFontSize(12);
+  doc.text("RESERVA",x+8,y+10);
+  doc.setFontSize(7.5); doc.setFont("helvetica","normal");
+  doc.text(`VIA ${indice}`,x+w-8,y+10,{align:"right"});
+  doc.setTextColor(8,47,73); doc.setFont("times","bold"); doc.setFontSize(d.nome.length>30?17:21);
+  doc.text(doc.splitTextToSize(d.nome,w-16),x+8,y+38);
+  let yy=y+60;
+  const itens=[
+    ["DATA",`${d.data} às ${d.hora}`],
+    ["PESSOAS",`${d.pessoas} pessoa(s)`],
+    ["LOCAL",d.local],
+    ["STATUS",d.status],
+    ["CONTATO",d.telefone]
+  ];
+  itens.forEach(([l,v])=>{
+    doc.setTextColor(100,116,139); doc.setFont("helvetica","bold"); doc.setFontSize(7); doc.text(l,x+8,yy);
+    doc.setTextColor(8,47,73); doc.setFontSize(9); doc.text(doc.splitTextToSize(String(v),w-43),x+39,yy);
+    yy+=12;
   });
-  const registro = result?.data || null;
-  if(!registro){
-    throw new Error("Nenhuma URL de impressão ativa encontrada.");
-  }
-  const url = montarUrlImpressaoOtto(registro.url);
-  if(!url){
-    throw new Error("URL de impressão inválida.");
-  }
-  return {registro,url};
+  doc.setDrawColor(203,225,238); doc.line(x+8,y+h-25,x+w-8,y+h-25);
+  doc.setTextColor(3,105,161); doc.setFont("helvetica","bold"); doc.setFontSize(8);
+  doc.text("MERCATTO DELÍCIA",x+w/2,y+h-14,{align:"center"});
+  doc.setTextColor(100,116,139); doc.setFont("helvetica","normal"); doc.setFontSize(6.8);
+  doc.text("Comprovante de reserva",x+w/2,y+h-8,{align:"center"});
 }
 
-async function atualizarStatusUrlImpressaoOtto(id, statusAtual){
+function gerarModeloCompacto(r){
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:"portrait",unit:"mm",format:"a4"});
+  const W=210,H=297;
+  doc.setFillColor(248,252,255); doc.rect(0,0,W,H,"F");
+  desenharComprovanteCompacto(doc,r,12,12,186,128,1);
+  doc.setDrawColor(148,163,184); doc.setLineDashPattern([2,2],0); doc.line(12,148,198,148); doc.setLineDashPattern([],0);
+  doc.setTextColor(100,116,139); doc.setFont("helvetica","normal"); doc.setFontSize(6.5); doc.text("RECORTE AQUI",105,146,{align:"center"});
+  desenharComprovanteCompacto(doc,r,12,157,186,128,2);
+  return doc;
+}
 
-  if(!id){
-    return;
-  }
+function gerarModeloMesa(r){
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:"landscape",unit:"mm",format:"a4"});
+  const d=dadosPDFReserva(r), W=297,H=210, half=W/2;
+  doc.setFillColor(247,252,255); doc.rect(0,0,W,H,"F");
+  doc.setDrawColor(181,136,59); doc.setLineDashPattern([2,2],0); doc.line(half,8,half,H-8); doc.setLineDashPattern([],0);
 
+  const card=(x,y,w,h)=>{doc.setFillColor(255,255,255);doc.setDrawColor(238,213,156);doc.setLineWidth(1);doc.roundedRect(x,y,w,h,7,7,"FD");doc.setDrawColor(181,136,59);doc.setLineWidth(.3);doc.roundedRect(x+4,y+4,w-8,h-8,5,5,"S");};
+  const left={x:10,y:10,w:half-20,h:H-20}; card(left.x,left.y,left.w,left.h);
+  const mid=left.y+left.h/2; doc.setDrawColor(220,200,150);doc.setLineDashPattern([2,2],0);doc.line(left.x+18,mid,left.x+left.w-18,mid);doc.setLineDashPattern([],0);
+  doc.setTextColor(145,120,75);doc.setFont("helvetica","normal");doc.setFontSize(5);doc.text("DOBRAR AQUI",left.x+left.w/2,mid-2,{align:"center"});
+
+  const face=(fy,fh,rot)=>{
+    const cx=left.x+left.w/2, cy=fy+fh/2;
+    doc.setTextColor(128,89,29);doc.setFont("helvetica","bold");doc.setFontSize(8);
+    doc.text("MERCATTO DELÍCIA",cx,rot?fy+fh-18:fy+20,{align:"center",angle:rot?180:0});
+    doc.setTextColor(8,47,73);doc.setFont("times","bold");doc.setFontSize(d.nome.length>34?22:28);
+    doc.text(doc.splitTextToSize(d.nome,left.w-34),cx,cy+(rot?8:3),{align:"center",angle:rot?180:0});
+    doc.setTextColor(128,89,29);doc.setFont("helvetica","bold");doc.setFontSize(7);
+    doc.text(`${d.data} às ${d.hora}`,cx,rot?fy+18:fy+fh-18,{align:"center",angle:rot?180:0});
+  };
+  face(left.y,left.h/2,true); face(mid,left.h/2,false);
+
+  const right={x:half+10,y:10,w:half-20,h:H-20};card(right.x,right.y,right.w,right.h);
+  doc.setFillColor(239,248,255);doc.roundedRect(right.x+20,right.y+28,right.w-40,right.h-56,12,12,"F");
+  doc.setTextColor(128,89,29);doc.setFont("helvetica","bold");doc.setFontSize(9);doc.text("MERCATTO DELÍCIA",right.x+right.w/2,right.y+45,{align:"center"});
+  doc.setTextColor(8,47,73);doc.setFont("times","normal");doc.setFontSize(22);doc.text("Seja bem-vindo(a)",right.x+right.w/2,right.y+68,{align:"center"});
+  doc.setFont("times","bold");doc.setFontSize(d.nome.length>32?15:18);doc.text(doc.splitTextToSize(d.nome,right.w-50),right.x+right.w/2,right.y+84,{align:"center"});
+  doc.setFont("helvetica","normal");doc.setFontSize(10);doc.setTextColor(71,85,105);
+  const msg=doc.splitTextToSize("Preparamos sua reserva com carinho para proporcionar uma experiência especial e inesquecível.",right.w-58);
+  doc.text(msg,right.x+right.w/2,right.y+108,{align:"center"});
+  doc.setFillColor(255,255,255);doc.setDrawColor(238,213,156);doc.roundedRect(right.x+32,right.y+right.h-55,right.w-64,27,7,7,"FD");
+  doc.setTextColor(128,89,29);doc.setFont("helvetica","bold");doc.setFontSize(8);doc.text("RESERVA PARA",right.x+right.w/2,right.y+right.h-44,{align:"center"});
+  doc.setTextColor(8,47,73);doc.setFontSize(11);doc.text(`${d.pessoas} pessoa(s) • ${d.local}`,right.x+right.w/2,right.y+right.h-35,{align:"center"});
+  return doc;
+}
+
+function gerarModeloElegante(r){
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:"landscape",unit:"mm",format:"a4"});
+  const d=dadosPDFReserva(r),W=297,H=210;
+  doc.setFillColor(246,251,255);doc.rect(0,0,W,H,"F");
+  doc.setFillColor(3,105,161);doc.rect(0,0,88,H,"F");
+  doc.setFillColor(14,165,233);doc.circle(15,18,36,"F");doc.setFillColor(2,132,199);doc.circle(78,192,48,"F");
+  doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(10);doc.text("MERCATTO DELÍCIA",15,35);
+  doc.setFont("times","bold");doc.setFontSize(31);doc.text("Reserva",15,62);
+  doc.setFont("helvetica","normal");doc.setFontSize(11);doc.text("Confirmação e informações",15,73);
+  doc.setFont("helvetica","bold");doc.setFontSize(8);doc.text("DATA",15,108);doc.setFontSize(14);doc.text(d.data,15,119);
+  doc.setFontSize(8);doc.text("HORÁRIO",15,139);doc.setFontSize(14);doc.text(d.hora,15,150);
+  doc.setFontSize(8);doc.text("STATUS",15,170);doc.setFontSize(12);doc.text(d.status,15,181);
+
+  doc.setTextColor(3,105,161);doc.setFont("helvetica","bold");doc.setFontSize(9);doc.text("RESERVA EM NOME DE",108,38);
+  doc.setTextColor(8,47,73);doc.setFont("times","bold");doc.setFontSize(d.nome.length>34?25:34);doc.text(doc.splitTextToSize(d.nome,168),108,57);
+  doc.setDrawColor(186,230,253);doc.setLineWidth(.8);doc.line(108,82,274,82);
+  campoPDF(doc,108,96,78,"Pessoas",`${d.pessoas} pessoa(s)`,{h:28});
+  campoPDF(doc,196,96,78,"Local / mesa",d.local,{h:28});
+  campoPDF(doc,108,134,78,"Telefone",d.telefone,{h:28});
+  campoPDF(doc,196,134,78,"Pagamento",d.pagamento,{h:28});
+  doc.setTextColor(71,85,105);doc.setFont("helvetica","normal");doc.setFontSize(9);
+  doc.text("Agradecemos pela preferência. Sua reserva foi registrada em nosso sistema.",108,181,{maxWidth:166});
+  rodapePDF(doc,W,H);
+  return doc;
+}
+
+function criarDocumentoPDFReserva(r,modelo){
+  if(modelo==="ficha") return gerarModeloFicha(r);
+  if(modelo==="compacto") return gerarModeloCompacto(r);
+  if(modelo==="mesa") return gerarModeloMesa(r);
+  return gerarModeloElegante(r);
+}
+
+function atualizarSelecaoModeloPDF(){
+  document.querySelectorAll(".pdf-model-card").forEach(card=>{
+    const ativo=card.dataset.modelo===pdfReservaState.modelo;
+    card.classList.toggle("active",ativo);
+    card.setAttribute("aria-pressed",ativo?"true":"false");
+  });
+  const info=PDF_MODELOS[pdfReservaState.modelo];
+  const el=document.getElementById("pdfPreviewTitle");
+  if(el) el.textContent=info?.nome || "Prévia do PDF";
+}
+
+async function atualizarPreviewPDFReserva(){
+  const frame=document.getElementById("pdfPreviewFrame");
+  const loading=document.getElementById("pdfPreviewLoading");
+  const btn=document.getElementById("btnDownloadReservaPDF");
+  if(!pdfReservaState.reserva || !frame) return;
+  if(loading) loading.classList.add("show");
+  if(btn) btn.disabled=true;
   try{
-
-    const payload = {
-      status_atual:statusAtual,
-      ultima_verificacao:new Date().toISOString()
-    };
-
-    if(statusAtual === "offline"){
-      payload.ultima_queda = new Date().toISOString();
-    }
-
-    if(statusAtual === "online"){
-      payload.ultimo_retorno = new Date().toISOString();
-    }
-
-    await backendRequest("impressao.atualizarStatus", {id,payload});
-
+    limparPreviewPDFReserva();
+    const doc=criarDocumentoPDFReserva(pdfReservaState.reserva,pdfReservaState.modelo);
+    const blob=doc.output("blob");
+    const url=URL.createObjectURL(blob);
+    const d=dadosPDFReserva(pdfReservaState.reserva);
+    pdfReservaState.blob=blob;
+    pdfReservaState.blobUrl=url;
+    pdfReservaState.nomeArquivo=`reserva_${nomeSeguroArquivo(d.nome)}_${pdfReservaState.modelo}.pdf`;
+    frame.src=url;
   }catch(err){
-    console.warn("Erro ao atualizar url_api:", err.message);
+    console.error(err);
+    toast("⚠️ Erro ao gerar a prévia: "+err.message);
+  }finally{
+    if(loading) loading.classList.remove("show");
+    if(btn) btn.disabled=!pdfReservaState.blob;
   }
-
 }
 
-async function enviarBlobParaImpressaoOtto(blob, nomeArquivo){
-
-  const busca =
-    await buscarUrlImpressaoOtto();
-
-  const formData = new FormData();
-
-  formData.append(
-    "arquivo",
-    blob,
-    nomeArquivo || `impressao_${Date.now()}.pdf`
-  );
-
-  const resposta = await fetch(busca.url, {
-    method:"POST",
-    headers:{
-      "x-api-token":TOKEN_IMPRESSAO_OTTO
-    },
-    body:formData
-  });
-
-  const texto =
-    await resposta.text();
-
-  let json = {};
-
-  try{
-    json = JSON.parse(texto || "{}");
-  }catch(e){
-    json = {
-      resposta_bruta:texto
-    };
-  }
-
-  if(!resposta.ok || json.erro){
-
-    await atualizarStatusUrlImpressaoOtto(
-      busca.registro?.id,
-      "offline"
-    );
-
-    throw new Error(
-      json.mensagem ||
-      json.detalhe ||
-      "Erro ao enviar para impressão."
-    );
-
-  }
-
-  await atualizarStatusUrlImpressaoOtto(
-    busca.registro?.id,
-    "online"
-  );
-
-  return json;
-
+function abrirCentralPDFReserva(r){
+  if(!window.jspdf?.jsPDF){toast("Biblioteca PDF não carregou.");return;}
+  pdfReservaState.reserva=r;
+  pdfReservaState.modelo="elegante";
+  atualizarSelecaoModeloPDF();
+  openModal("pdfReservaModal");
+  atualizarPreviewPDFReserva();
 }
 
+function fecharCentralPDFReserva(){
+  const frame=document.getElementById("pdfPreviewFrame");
+  if(frame) frame.src="about:blank";
+  limparPreviewPDFReserva();
+  pdfReservaState.reserva=null;
+  closeModal("pdfReservaModal");
+}
 
-
+function baixarPDFReservaSelecionado(){
+  if(!pdfReservaState.blob){toast("Aguarde a prévia ser gerada.");return;}
+  const a=document.createElement("a");
+  a.href=pdfReservaState.blobUrl;
+  a.download=pdfReservaState.nomeArquivo;
+  document.body.appendChild(a);a.click();a.remove();
+  toast("✅ PDF baixado com sucesso.");
+}
 
 async function imprimirReservaA4(e){
-
-  const id = e.currentTarget.dataset.id;
-
-  const r = state.reservas.find(x => String(x.id) === String(id));
-
-  if(!r){
-    toast("Reserva não encontrada.");
-    return;
-  }
-
-  if(!window.jspdf?.jsPDF){
-    toast("Biblioteca PDF não carregou.");
-    return;
-  }
-
-const temaNamorados = false;
-
-const { jsPDF } = window.jspdf;
-
-const doc = new jsPDF({
-  orientation:"landscape",
-  unit:"mm",
-  format:"a4"
-});
-
-const nome = r.nome || "Reservante";
-const pessoas = r.pessoas || "—";
-const local = r.mesa || "—";
-const data = formatDateBR(r.datahora);
-const hora = formatTimeBR(r.datahora);
-
-const pageW = 297;
-const pageH = 210;
-const metade = pageW / 2;
-
-const gold = temaNamorados ? [185, 28, 28] : [181,136,59];
-const goldDark = temaNamorados ? [127, 29, 29] : [128,89,29];
-const goldLight = temaNamorados ? [248, 113, 113] : [238,213,156];
-
-const azulEscuro = [8,47,73];
-const azulMedio = [3,105,161];
-const azulClaro = [239,248,255];
-const azulFundo = [247,252,255];
-
-const vinho = [127, 29, 29];
-const rosaFundo = [255, 245, 245];
-const rosaBox = [255, 250, 250];
-
-const fundo = temaNamorados ? rosaFundo : azulFundo;
-const texto = temaNamorados ? vinho : azulEscuro;
-const detalheFundo = temaNamorados ? rosaBox : azulClaro;
-
-  // =====================================================
-  // FUNÇÕES DE DESENHO
-  // =====================================================
-
-  function fundoPagina(){
-    doc.setFillColor(...fundo);
-    doc.rect(0,0,pageW,pageH,"F");
-  }
-
-  function linhaCentral(){
-    doc.setDrawColor(220,200,150);
-    doc.setLineWidth(0.45);
-    doc.setLineDashPattern([2,2],0);
-    doc.line(metade,8,metade,pageH-8);
-    doc.setLineDashPattern([],0);
-  }
-
-  function cardBase(x,y,w,h){
-    doc.setFillColor(255,255,255);
-    doc.roundedRect(x,y,w,h,7,7,"F");
-
-    doc.setDrawColor(...goldLight);
-    doc.setLineWidth(1.1);
-    doc.roundedRect(x,y,w,h,7,7,"S");
-
-    doc.setDrawColor(...gold);
-    doc.setLineWidth(0.35);
-    doc.roundedRect(x+4,y+4,w-8,h-8,5,5,"S");
-  }
-
-  function cantosDourados(x,y,w,h){
-
-    doc.setDrawColor(...gold);
-    doc.setLineWidth(0.35);
-
-    // superior esquerdo
-    doc.line(x+10,y+10,x+38,y+10);
-    doc.line(x+10,y+10,x+10,y+38);
-    doc.line(x+14,y+15,x+32,y+15);
-    doc.line(x+15,y+14,x+15,y+32);
-
-    // superior direito
-    doc.line(x+w-10,y+10,x+w-38,y+10);
-    doc.line(x+w-10,y+10,x+w-10,y+38);
-    doc.line(x+w-14,y+15,x+w-32,y+15);
-    doc.line(x+w-15,y+14,x+w-15,y+32);
-
-    // inferior esquerdo
-    doc.line(x+10,y+h-10,x+38,y+h-10);
-    doc.line(x+10,y+h-10,x+10,y+h-38);
-    doc.line(x+14,y+h-15,x+32,y+h-15);
-    doc.line(x+15,y+h-14,x+15,y+h-32);
-
-    // inferior direito
-    doc.line(x+w-10,y+h-10,x+w-38,y+h-10);
-    doc.line(x+w-10,y+h-10,x+w-10,y+h-38);
-    doc.line(x+w-14,y+h-15,x+w-32,y+h-15);
-    doc.line(x+w-15,y+h-14,x+w-15,y+h-32);
-  }
-
-  function flor(x,y,escala=1){
-
-    if(!temaNamorados) return;
-
-    doc.setFillColor(98,30,55);
-    doc.circle(x,y,5*escala,"F");
-
-    doc.setFillColor(125,39,65);
-    doc.circle(x+7*escala,y+3*escala,4.2*escala,"F");
-
-    doc.setFillColor(150,58,82);
-    doc.circle(x+2*escala,y+9*escala,3.8*escala,"F");
-
-    doc.setFillColor(92,112,72);
-    doc.ellipse(x+12*escala,y+5*escala,4*escala,1.8*escala,"F");
-    doc.ellipse(x-6*escala,y+6*escala,3.6*escala,1.6*escala,"F");
-
-    doc.setDrawColor(...gold);
-    doc.setLineWidth(0.25);
-    doc.line(x-8*escala,y+14*escala,x+17*escala,y-6*escala);
-  }
-
-function decoracao(x,y,w,h){
-
-  cantosDourados(x,y,w,h);
-
-  if(!temaNamorados){
-
-    doc.setFillColor(224,242,254);
-    doc.circle(x+30,y+30,12,"F");
-
-    doc.setFillColor(186,230,253);
-    doc.circle(x+w-30,y+h-30,16,"F");
-
-    doc.setFillColor(14,165,233);
-    doc.circle(x+w-27,y+31,4,"F");
-
-    doc.setFillColor(186,230,253);
-    doc.circle(x+32,y+h-33,7,"F");
-  }
+  const id=e.currentTarget.dataset.id;
+  const r=state.reservas.find(x=>String(x.id)===String(id));
+  if(!r){toast("Reserva não encontrada.");return;}
+  abrirCentralPDFReserva(r);
 }
 
-  function ajustarFonte(texto, tamanhoInicial, larguraMaxima){
-    let tamanho = tamanhoInicial;
-
-    doc.setFontSize(tamanho);
-
-    while(doc.getTextWidth(texto) > larguraMaxima && tamanho > 18){
-      tamanho -= 1;
-      doc.setFontSize(tamanho);
-    }
-
-    return tamanho;
-  }
-
-  // =====================================================
-  // LADO ESQUERDO — NOME
-  // =====================================================
-
-function desenharLadoNome(){
-
-  const x = 10;
-  const y = 10;
-  const w = metade - 20;
-  const h = pageH - 20;
-
-  const meioY = y + h / 2;
-
-  cardBase(x,y,w,h);
-  decoracao(x,y,w,h);
-
-  // Linha pontilhada horizontal para DOBRAR o lado do nome
-  doc.setDrawColor(220,200,150);
-  doc.setLineWidth(0.45);
-  doc.setLineDashPattern([2,2],0);
-  doc.line(x + 18, meioY, x + w - 18, meioY);
-  doc.setLineDashPattern([],0);
-
-  // Texto pequeno da dobra
-  doc.setFont("helvetica","normal");
-  doc.setFontSize(5);
-  doc.setTextColor(145,120,75);
-  doc.text("DOBRAR AQUI", x + w / 2, meioY - 2, {
-    align:"center"
+function initCentralPDFReserva(){
+  document.querySelectorAll(".pdf-model-card").forEach(card=>{
+    card.addEventListener("click",async()=>{
+      pdfReservaState.modelo=card.dataset.modelo || "elegante";
+      atualizarSelecaoModeloPDF();
+      await atualizarPreviewPDFReserva();
+    });
   });
-
-  // Centraliza texto normal e também texto invertido sem quebrar
-  function textoCentralizado(textoLinha, cx, yy, tamanho, fonte, estilo, invertido){
-
-    doc.setFont(fonte, estilo);
-    doc.setFontSize(tamanho);
-
-    const largura = doc.getTextWidth(textoLinha);
-
-    if(invertido){
-
-      // Para texto invertido, NÃO usar align center.
-      // Essa conta mantém o texto centralizado dentro do card.
-      doc.text(textoLinha, cx + largura / 2, yy, {
-        angle:180
-      });
-
-    }else{
-
-      doc.text(textoLinha, cx - largura / 2, yy);
-    }
-  }
-
-  function escreverFaceNome(faceX, faceY, faceW, faceH, invertido){
-
-    const cx = faceX + faceW / 2;
-    const cy = faceY + faceH / 2;
-
-    // =========================
-    // POSIÇÕES DA FACE
-    // =========================
-
-    const tituloY = invertido ? faceY + faceH - 18 : faceY + 22;
-    const nomeCentroY = invertido ? cy + 8 : cy + 4;
-    const linhaY = invertido ? faceY + 28 : faceY + faceH - 28;
-    const dataY = invertido ? faceY + 20 : faceY + faceH - 18;
-
-    // =========================
-    // TÍTULO MERCATTO
-    // =========================
-
-    doc.setTextColor(...goldDark);
-
-    textoCentralizado(
-      "MERCATTO DELÍCIA",
-      cx,
-      tituloY,
-      8,
-      "helvetica",
-      "bold",
-      invertido
-    );
-
-    // =========================
-    // NOME PRINCIPAL
-    // =========================
-
-    doc.setTextColor(...texto);
-    doc.setFont("times","normal");
-
-    let tamanho = 31;
-
-    if(nome.length > 20) tamanho = 28;
-    if(nome.length > 28) tamanho = 25;
-    if(nome.length > 36) tamanho = 22;
-    if(nome.length > 46) tamanho = 19;
-
-    doc.setFontSize(tamanho);
-
-    const nomeLinhas = doc.splitTextToSize(nome, faceW - 34);
-    const alturaLinha = tamanho * 0.42;
-    const totalAltura = nomeLinhas.length * alturaLinha;
-
-    let startY = nomeCentroY - totalAltura / 2 + 5;
-
-    nomeLinhas.forEach((linha, i) => {
-
-      const linhaYAtual = startY + (i * alturaLinha);
-
-      textoCentralizado(
-        linha,
-        cx,
-        linhaYAtual,
-        tamanho,
-        "times",
-        "normal",
-        invertido
-      );
-
-    });
-
-    // =========================
-    // LINHA DECORATIVA
-    // =========================
-
-    doc.setDrawColor(...goldLight);
-    doc.setLineWidth(0.35);
-    doc.line(cx - 34, linhaY, cx + 34, linhaY);
-
-    // =========================
-    // DATA
-    // =========================
-
-    doc.setTextColor(...goldDark);
-
-    textoCentralizado(
-      `${data} às ${hora}`,
-      cx,
-      dataY,
-      7,
-      "helvetica",
-      "bold",
-      invertido
-    );
-  }
-
-  // Parte de cima: invertida, mas agora centralizada corretamente
-  escreverFaceNome(
-    x,
-    y,
-    w,
-    h / 2,
-    true
-  );
-
-  // Parte de baixo: normal
-  escreverFaceNome(
-    x,
-    meioY,
-    w,
-    h / 2,
-    false
-  );
-}
-  // =====================================================
-  // LADO DIREITO — MENSAGEM
-  // =====================================================
-
-  function desenharLadoMensagem(){
-
-    const x = metade + 10;
-    const y = 10;
-    const w = metade - 20;
-    const h = pageH - 20;
-
-    cardBase(x,y,w,h);
-    decoracao(x,y,w,h);
-
-    // caixa interna suave
-    doc.setFillColor(...detalheFundo);
-    doc.roundedRect(x+22,y+32,w-44,h-64,12,12,"F");
-
-    doc.setDrawColor(...goldLight);
-    doc.setLineWidth(0.45);
-    doc.roundedRect(x+22,y+32,w-44,h-64,12,12,"S");
-
-    doc.setTextColor(...goldDark);
-    doc.setFont("helvetica","bold");
-    doc.setFontSize(10);
-    doc.text("MERCATTO DELÍCIA", x + w/2, y + 49, {
-      align:"center"
-    });
-
-    doc.setTextColor(...texto);
-    doc.setFont("times","normal");
-    doc.setFontSize(22);
-
-    doc.text(
-      temaNamorados ? "Uma noite especial" : "Seja bem-vindo(a)",
-      x + w/2,
-      y + 70,
-      {align:"center"}
-    );
-
-    doc.setFont("times","bold");
-    doc.setFontSize(18);
-
-    const nomeCurto = nome.length > 32 ? nome.slice(0,32) + "..." : nome;
-
-    doc.text(nomeCurto, x + w/2, y + 86, {
-      align:"center"
-    });
-
-    doc.setFont("helvetica","normal");
-    doc.setFontSize(10.5);
-    doc.setTextColor(...texto);
-
-    const mensagem = temaNamorados
-      ? `Preparamos este momento com muito carinho para celebrar o amor, os bons encontros e as experiências que ficam na memória.
-
-Que esta noite seja inesquecível.`
-      : `Preparamos sua reserva com muito carinho para que este momento seja acolhedor, especial e inesquecível.
-
-Agradecemos pela preferência e desejamos uma excelente experiência.`;
-
-    const linhas = doc.splitTextToSize(mensagem, w - 58);
-
-    let textoY = y + 106;
-
-    linhas.forEach((linha, i) => {
-      doc.text(linha, x + w/2, textoY + (i * 5.5), {
-        align:"center"
-      });
-    });
-
-    // destaque reserva
-    doc.setFillColor(255,255,255);
-    doc.roundedRect(x+35,y+h-55,w-70,25,7,7,"F");
-
-    doc.setDrawColor(...goldLight);
-    doc.setLineWidth(0.4);
-    doc.roundedRect(x+35,y+h-55,w-70,25,7,7,"S");
-
-    doc.setTextColor(...goldDark);
-    doc.setFont("helvetica","bold");
-    doc.setFontSize(8);
-    doc.text("RESERVA PARA", x + w/2, y+h-45, {
-      align:"center"
-    });
-
-    doc.setTextColor(...texto);
-    doc.setFontSize(12);
-    doc.text(`${pessoas} pessoa(s) • ${local}`, x + w/2, y+h-36, {
-      align:"center"
-    });
-
-    doc.setFont("helvetica","normal");
-    doc.setFontSize(8);
-    doc.setTextColor(120,120,120);
-    doc.text(
-      temaNamorados
-        ? "Amor, sabor e boas experiências."
-        : "Uma experiência além da gastronomia.",
-      x + w/2,
-      y + h - 18,
-      {align:"center"}
-    );
-  }
-
-  // =====================================================
-  // DESENHAR FOLHA
-  // =====================================================
-
-  fundoPagina();
-  linhaCentral();
-
-  desenharLadoNome();
-  desenharLadoMensagem();
-
-  // instrução pequena
-  doc.setFont("helvetica","normal");
-  doc.setFontSize(6);
-  doc.setTextColor(145,120,75);
-  doc.text(
-    "",
-    pageW / 2,
-    pageH - 3,
-    {align:"center"}
-  );
-
-  // =====================================================
-  // ABRIR PARA IMPRIMIR
-  // =====================================================
-
-  const arquivoNome =
-    `reserva_${nome.replace(/[^\wÀ-ÿ]+/g,"_")}_${temaNamorados ? "dia_dos_namorados" : "normal"}.pdf`;
-
-const blob = doc.output("blob");
-
-try{
-
-  abrirPopupOttoImprimindo();
-
-  toast("🖨️ OTTO está imprimindo. Verifique a impressora.");
-
-  await enviarBlobParaImpressaoOtto(
-    blob,
-    arquivoNome
-  );
-
-  toast("✅ Enviado para impressão.");
-
-}catch(err){
-
-  console.error(err);
-
-  toast("⚠️ Erro ao imprimir: " + err.message);
-
-}finally{
-
-  setTimeout(() => {
-    fecharPopupOttoImprimindo();
-  }, 1800);
-
-}
+  const baixar=document.getElementById("btnDownloadReservaPDF");
+  if(baixar) baixar.addEventListener("click",baixarPDFReservaSelecionado);
+  document.querySelectorAll('[data-close-pdf-reserva]').forEach(btn=>btn.addEventListener("click",fecharCentralPDFReserva));
+  const modal=document.getElementById("pdfReservaModal");
+  if(modal) modal.addEventListener("click",ev=>{if(ev.target===modal) fecharCentralPDFReserva();});
 }
 
 
 
-
-
-
-
-
-
-
-
-
-    
 /* =========================================================
    START
 ========================================================= */
@@ -5938,6 +5610,7 @@ async function handleLogout(){
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
+  initCentralPDFReserva();
   $("#loginForm").addEventListener("submit", handleLogin);
   $("#forgotPassword").addEventListener("click", handleForgotPassword);
   $("#togglePassword").addEventListener("click", () => {
@@ -5968,32 +5641,49 @@ window.addEventListener("DOMContentLoaded", async () => {
 
 
 
-  <div class="modal modal-small" id="ottoPrintModal" aria-hidden="true">
-    <div class="sheet">
-      <div class="sheet-body" style="text-align:center;padding:28px">
-        <div style="
-        width:54px;
-        height:54px;
-        border-radius:999px;
-        border:6px solid #dbeafe;
-        border-top-color:#0284c7;
-        margin:0 auto 14px;
-        animation:ottoSpin 1s linear infinite;
-      "></div>
-
-        <h3 style="margin:0 0 8px;color:#075985;font-size:1.15rem;font-weight:950">
-          OTTO está imprimindo
-        </h3>
-
-        <p style="margin:0;color:#64748b;font-size:.9rem;font-weight:800;line-height:1.4">
-          Verifique a impressora.
-        </p>
+  <div class="modal pdf-reserva-modal" id="pdfReservaModal" aria-hidden="true">
+    <div class="sheet pdf-reserva-sheet" role="dialog" aria-modal="true" aria-labelledby="pdfReservaModalTitle">
+      <div class="sheet-head pdf-reserva-head">
+        <div>
+          <h3 id="pdfReservaModalTitle">Visualizar e baixar PDF</h3>
+          <p>Selecione um dos quatro modelos e confira a prévia antes de baixar.</p>
+        </div>
+        <button type="button" class="btn btn-ghost btn-xs" data-close-pdf-reserva aria-label="Fechar">✕ Fechar</button>
+      </div>
+      <div class="pdf-reserva-body">
+        <aside class="pdf-models-panel">
+          <div class="pdf-models-title">Modelos de impressão</div>
+          <button type="button" class="pdf-model-card active" data-modelo="elegante" aria-pressed="true">
+            <span class="pdf-model-icon">✨</span><span><b>Elegante horizontal</b><small>A4 paisagem, moderno e completo.</small></span><i>✓</i>
+          </button>
+          <button type="button" class="pdf-model-card" data-modelo="ficha" aria-pressed="false">
+            <span class="pdf-model-icon">📋</span><span><b>Ficha completa</b><small>A4 vertical com todos os detalhes.</small></span><i>✓</i>
+          </button>
+          <button type="button" class="pdf-model-card" data-modelo="compacto" aria-pressed="false">
+            <span class="pdf-model-icon">✂️</span><span><b>Cartões compactos</b><small>Duas vias destacáveis na folha.</small></span><i>✓</i>
+          </button>
+          <button type="button" class="pdf-model-card" data-modelo="mesa" aria-pressed="false">
+            <span class="pdf-model-icon">🪧</span><span><b>Display de mesa</b><small>Modelo dobrável para identificação.</small></span><i>✓</i>
+          </button>
+          <div class="pdf-download-box">
+            <b>Arquivo em PDF</b>
+            <small>O sistema não envia mais para impressora. O documento será baixado no seu dispositivo.</small>
+            <button type="button" class="btn btn-primary btn-block" id="btnDownloadReservaPDF">⬇ Baixar PDF selecionado</button>
+          </div>
+        </aside>
+        <section class="pdf-preview-panel">
+          <div class="pdf-preview-toolbar">
+            <div><small>PRÉVIA DO DOCUMENTO</small><b id="pdfPreviewTitle">Elegante horizontal</b></div>
+            <span class="chip confirmada">PDF</span>
+          </div>
+          <div class="pdf-preview-wrap">
+            <div class="pdf-preview-loading" id="pdfPreviewLoading"><span></span><b>Gerando prévia...</b></div>
+            <iframe id="pdfPreviewFrame" title="Prévia do PDF da reserva"></iframe>
+          </div>
+        </section>
       </div>
     </div>
   </div>
-
-
-
 
 
 
